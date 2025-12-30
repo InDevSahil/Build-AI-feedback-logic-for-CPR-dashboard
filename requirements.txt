@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+websockets
+numpy
+scipy
+scikit-learn
+google-generativeai
+mediapipe
+opencv-python-headless

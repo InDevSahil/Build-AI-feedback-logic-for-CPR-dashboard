@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI CPR Dashboard</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar / Header -->
+        <header class="dashboard-header">
+            <div class="logo">
+                <span class="icon">♥</span>
+                <h1>TOMORO <span class="highlight">CPR</span></h1>
+            </div>
+            <div class="status-indicator" id="connection-status">
+                <span class="dot"></span> Disconnected
+            </div>
+            <nav>
+                <button class="nav-btn active">Live Monitor</button>
+                <button class="nav-btn">History</button>
+                <button class="nav-btn">Settings</button>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <main class="dashboard-content">
+
+            <!-- Top Row: Metrics -->
+            <div class="metrics-grid">
+                <!-- Rate Card -->
+                <div class="card metric-card" id="card-rate">
+                    <div class="card-title">Compression Rate</div>
+                    <div class="metric-value"><span id="val-rate">--</span> <span class="unit">cpm</span></div>
+                    <div class="metric-status" id="status-rate">Waiting...</div>
+                    <div class="metric-bar-container">
+                        <div class="metric-bar-bg">
+                            <div class="metric-bar-fill" id="bar-rate" style="width: 0%"></div>
+                        </div>
+                        <div class="metric-target-zone" style="left: 45%; width: 25%;"></div> <!-- Target 100-120 -->
+                    </div>
+                </div>
+
+                <!-- Depth Card -->
+                <div class="card metric-card" id="card-depth">
+                    <div class="card-title">Compression Depth</div>
+                    <div class="metric-value"><span id="val-depth">--</span> <span class="unit">mm</span></div>
+                    <div class="metric-status" id="status-depth">Waiting...</div>
+                    <div class="metric-bar-container">
+                        <div class="metric-bar-bg">
+                            <div class="metric-bar-fill" id="bar-depth" style="width: 0%"></div>
+                        </div>
+                        <div class="metric-target-zone" style="left: 50%; width: 10%;"></div> <!-- Target 50-60 -->
+                    </div>
+                </div>
+
+                <!-- AI Prediction Card -->
+                <div class="card ai-card">
+                    <div class="card-title">AI ROSC Prediction</div>
+                    <div class="ai-circle">
+                        <svg viewBox="0 0 36 36" class="circular-chart">
+                            <path class="circle-bg"
+                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            <path class="circle" id="ai-circle-path" stroke-dasharray="0, 100"
+                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        </svg>
+                        <div class="percentage" id="val-rosc">--%</div>
+                    </div>
+                    <div class="ai-insight" id="ai-insight">Insufficient Data</div>
+                </div>
+            </div>
+
+            <!-- New Row: Smart Assistance (AI + AR) -->
+            <div class="smart-grid">
+                <!-- Gemini Assistant Chat -->
+                <div class="card assistant-card">
+                    <div class="card-title">
+                        <span class="icon">✨</span> Gemini Rescue Assistant
+                    </div>
+                    <div class="chat-interface" id="ai-chat-box">
+                        <div class="ai-message">System: AI connecting...</div>
+                    </div>
+                    <div class="voice-status">🎙️ Voice Command Active</div>
+                </div>
+
+                <!-- AR/3D View -->
+                <div class="card ar-card">
+                    <div class="card-title">AR Posture Correction</div>
+                    <div class="ar-viewport">
+                        <div class="ar-overlay">
+                            <div class="pose-feedback" id="pose-feedback">Detecting Arms...</div>
+                        </div>
+                        <!-- Simple CSS 3D representation -->
+                        <div class="chest-model" id="chest-model">
+                            <div class="chest-surface"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Middle Row: Waveform -->
+            <div class="card waveform-card">
+                <div class="card-title">Real-time Compression Waveform</div>
+                <div class="chart-container">
+                    <canvas id="waveformChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Bottom Row: Feedback Log -->
+            <div class="card log-card">
+                <div class="card-title">Event Log</div>
+                <div class="log-list" id="event-log">
+                    <div class="log-item">System initialized. Waiting for sensor data...</div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>
